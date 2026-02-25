@@ -1,18 +1,18 @@
 const { MAIL_EMAIL, MAIL_PASSWORD } = process.env;
 const nodemailer = require('nodemailer');
-const PrepareTemplete = require('./Gettemplate');
+const prepareTemplate = require('./get-template');
 
 exports.sendEmail = (recipient, subject, data) => {
   return new Promise((resolve, reject) => {
-    const htmlToSend = PrepareTemplete(subject, data);
+    const htmlToSend = prepareTemplate(subject, data);
 
-    const mailOption = {
+    const mailOptions = {
       from: {
         name: 'Sales Manager',
         address: MAIL_EMAIL,
       },
       to: recipient,
-      subject: subject,
+      subject,
       html: htmlToSend,
     };
 
@@ -24,11 +24,11 @@ exports.sendEmail = (recipient, subject, data) => {
       },
     });
 
-    transporter.sendMail(mailOption, function (err, data) {
-      if (err) {
-        reject(err);
+    transporter.sendMail(mailOptions, (error, result) => {
+      if (error) {
+        reject(error);
       } else {
-        resolve(data);
+        resolve(result);
       }
     });
   });
