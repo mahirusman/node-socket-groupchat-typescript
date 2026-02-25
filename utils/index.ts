@@ -1,15 +1,13 @@
 import { EnumTypes } from './types';
 
-export function enumToArray(
-  enumToArray: any,
-  enumType: EnumTypes
-): Array<string> {
-  const enumValues: Array<string> = [];
+export function enumToArray(enumObject: any, enumType: EnumTypes): string[] {
+  const enumValues: string[] = [];
 
-  for (const value in enumToArray) {
-    if (typeof enumToArray[value] === enumType) {
-      enumValues.push(enumToArray[value]);
+  for (const value in enumObject) {
+    if (typeof enumObject[value] === enumType) {
+      enumValues.push(enumObject[value]);
     }
   }
+
   return enumValues;
 }

@@ -10,10 +10,10 @@ export enum ResponseStatusCodes {
 
 export interface CreateResponseOptions {
   id?: string;
-  status_code: ResponseStatusCodes;
+  statusCode: ResponseStatusCodes;
   data?: {
     [key: string]: unknown;
   };
-  errors?: Array<string>;
-  messages?: Array<string>;
+  errors?: string[];
+  messages?: string[];
 }

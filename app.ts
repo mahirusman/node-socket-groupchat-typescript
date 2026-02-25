@@ -1,20 +1,33 @@
-import express, { Request, Response } from 'express';
-var cors = require('cors');
+import cors from 'cors';
+import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 
-import customerRouter from './routes/userRoutes';
+import authRoutes from './routes/user-routes';
+import chatHeadsRoutes from './routes/chat-heads-routes';
+import messageRoutes from './routes/message-routes';
+import { AppError } from './utils/app-error';
+import { corsOriginValidator } from './utils/cors';
+import { globalErrorHandler } from './utils/error-controller';
 
 const app = express();
+
 app.use(express.json());
 app.use(morgan('dev'));
-app.use(cors());
+app.use(
+  cors({
+    origin: corsOriginValidator,
+    credentials: true,
+  })
+);
 
-app.use('/api/v1/auth', customerRouter);
+app.use('/api/v1/auth', authRoutes);
+app.use('/chat-heads', chatHeadsRoutes);
+app.use('/messages', messageRoutes);
 
-app.all('*', (req: Request, res: Response) => {
-  return res
-    .status(404)
-    .json({ msg: `can not find ${req.originalUrl} on this server!` });
+app.all('*', (req: Request, res: Response, next: NextFunction) => {
+  next(new AppError(`Cannot find ${req.originalUrl} on this server`, 404));
 });
+
+app.use(globalErrorHandler);
 
 export default app;

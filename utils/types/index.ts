@@ -1,10 +1,10 @@
 export interface TokenData {
   token: string;
-  expires_in: number;
+  expiresIn: number;
 }
 
 export interface DataStoredInToken {
-  _id: string;
+  userId: string;
 }
 
 export enum EnumTypes {

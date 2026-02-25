@@ -2,25 +2,24 @@ const handlebars = require('handlebars');
 const fs = require('fs');
 const path = require('path');
 
-const PrepareTemplete = (subject, data) => {
+const prepareTemplate = (subject, data) => {
   switch (subject) {
-    case 'Reset password':
+    case 'Reset password': {
       const emailTemplateSource = fs.readFileSync(
-        path.join(__dirname + '/views/resetPassword.hbs'),
+        path.join(__dirname, 'views/reset-password.hbs'),
         'utf8'
       );
 
       const template = handlebars.compile(emailTemplateSource);
 
-      const htmlToSend = template({
+      return template({
         message: data.message,
         link: data.link,
       });
-      return htmlToSend;
-
+    }
     default:
-      break;
+      return '';
   }
 };
 
-module.exports = PrepareTemplete;
+module.exports = prepareTemplate;
