@@ -1,4 +1,4 @@
-# Node + TypeScript Backend API
+# Node + TypeScript backend with real-time chat APIs (Socket.IO), cleans legacy modules, and adds env/husky/docs setup.
 
 ## 1. Project Overview
 
